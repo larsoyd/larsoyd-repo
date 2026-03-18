@@ -179,8 +179,7 @@ Server = https://example.invalid/larsoyd/$arch
 ```
 
 
-## Add a new package
->>>>>>> 08feff9 (Populate repo)
+## Adding a new package
 
 ### 1. Create or clone the packaging repo
 
