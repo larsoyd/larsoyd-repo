@@ -1,0 +1,13 @@
+# runtime/generated state
+logs/
+state/
+repo/builds/
+repo/pool/
+repo/snapshots/
+repo/current
+
+# managed package repos live outside this repo's index
+src/*
+
+# keep docs/examples if you add them
+!.gitkeep
