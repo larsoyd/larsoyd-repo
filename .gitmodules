@@ -1,0 +1,4 @@
+[submodule "src/audacity"]
+	path = src/audacity
+	url = git@github.com:larsoyd/audacity.git
+	branch = larsoyd/main
