@@ -105,7 +105,81 @@ LOCAL_BRANCH=larsoyd/main
 REPO_NAME=larsoyd
 ```
 
-## Add a new package
+## Installation
+
+### Prerequisites
+
+Install the tools used by the workflow:
+
+```zsh
+sudo pacman -S --needed git devtools pacman-contrib
+```
+
+`devtools` provides Arch packaging maintainer tools, including `pkgctl`, and `pacman-contrib` provides `updpkgsums`. 
+
+If you also want the Topgrade hook:
+
+```zsh
+# install topgrade however you prefer in your setup
+```
+
+### Clone the repo
+
+```zsh
+cd /srv
+sudo git clone --recurse-submodules git@github.com:larsoyd/larsoyd-repo.git larsoyd
+sudo chown -R $USER:alpm /srv/larsoyd
+```
+
+### Create runtime directories
+
+Because generated state is not tracked, create it after clone:
+
+```zsh
+cd /srv/larsoyd
+mkdir -p logs/pkg-refresh
+mkdir -p repo/builds repo/pool/$(uname -m) repo/snapshots
+mkdir -p state/pkg-refresh
+chmod +x bin/pkg-refresh.zsh
+```
+
+### Build and publish the local repo
+
+```zsh
+/srv/larsoyd/bin/pkg-refresh.zsh list
+/srv/larsoyd/bin/pkg-refresh.zsh audacity
+```
+
+That will build the package, stage artifacts, run `repo-add`, and populate the current repo view. `repo-add` updates a package database by reading built package files, and accepts multiple packages on the command line. 
+
+### Add the local repo to pacman
+
+Add a repository section to `/etc/pacman.conf` that points to the generated repo view:
+
+```ini
+[larsoyd]
+Server = file:///srv/larsoyd/repo/current/$arch
+```
+
+`pacman.conf` is divided into repository sections, and each section defines a package repository pacman can use in sync mode. You will also need a `SigLevel` that matches how you handle signatures in your own setup. I am not asserting a single universal value here, because that depends on whether you sign the packages and database. If unsure, add `SigLevel = Optional TrustAll`
+
+Then refresh:
+
+```zsh
+sudo pacman -Sy
+```
+
+## Optional: How to install directly from a published remote repo
+
+If you later  want users to install from your repo without building locally, publish the contents of the generated repo view, meaning the database files and package files from the active repo, to a static host. Then users can add something like:
+
+```ini
+[larsoyd]
+Server = https://example.invalid/larsoyd/$arch
+```
+
+
+## Adding a new package
 
 ### 1. Create or clone the packaging repo
 
