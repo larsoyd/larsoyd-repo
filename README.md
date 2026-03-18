@@ -112,7 +112,7 @@ REPO_NAME=larsoyd
 Install the tools used by the workflow:
 
 ```zsh
-sudo pacman -S --needed git devtools pacman-contrib
+sudo pacman -S --needed git devtools pacman-contrib zsh
 ```
 
 `devtools` provides Arch packaging maintainer tools, including `pkgctl`, and `pacman-contrib` provides `updpkgsums`. 
