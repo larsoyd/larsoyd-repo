@@ -10,7 +10,7 @@ This repo is the working tree behind `/srv/larsoyd`. It is built around Arch’s
 - `pacman` for consuming the published local repo 
 - `topgrade` as an optional runner through `pre_commands` 
 
-## Layout
+## Layout after repo-add
 
 ```text
 .
@@ -82,27 +82,17 @@ Each managed project has:
 9. runs `repo-add` to generate `larsoyd.db`
 10. switches `repo/current` to the new build
 
-This matches Arch’s recommended ALPM repo model: package files can be retained in a pool while the active repo state is exposed through a current view. 
+This is to match Arch’s recommended ALPM repo model: package files can be retained in a pool while the active repo state is exposed through a current view. 
 
-## Current managed package
+## Current managed package(s)
 
-At the moment, this workspace manages:
-
-* `audacity`
-
-The corresponding manifest is:
-
-```zsh
-PROJECT_ID=audacity
-ENABLED=1
-
-WORKTREE=/srv/larsoyd/src/audacity
-
-UPSTREAM_REMOTE=upstream
-UPSTREAM_BRANCH=main
-LOCAL_BRANCH=larsoyd/main
-
-REPO_NAME=larsoyd
+```md
+# audacity
+## CHANGELOG
+My modification of audacity ships with a single patch entitled `larsoyd-gtk-native-file-dialog.patch`
+This patch modifies Audacity to support GTK native file dialogs (GtkFileChooserNative) in it's custom FileDialog wrapper,
+This is to specifically make the KDE/portal-based file picker appear on GTK 3.20+ systems
+instead of Audacity's embedded GTK file chooser widget.
 ```
 
 ## Installation
