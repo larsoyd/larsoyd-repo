@@ -87,10 +87,12 @@ This is to match Arch’s recommended ALPM repo model: package files can be reta
 ## Current managed package(s)
 
 ```md
-# audacity
+# larsoyd-audacity
 ## CHANGELOG
 My modification of audacity ships with a single patch entitled `larsoyd-gtk-native-file-dialog.patch`
-This patch modifies Audacity to support GTK native file dialogs (GtkFileChooserNative) in it's custom FileDialog wrapper,
+This patch modifies Audacity to support GTK native file dialogs (GtkFileChooserNative) in
+it's custom FileDialog wrapper.
+
 This is to specifically make the KDE/portal-based file picker appear on GTK 3.20+ systems
 instead of Audacity's embedded GTK file chooser widget.
 ```
